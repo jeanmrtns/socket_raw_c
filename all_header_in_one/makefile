@@ -40,12 +40,12 @@ $(prj): $(OBJ)
 
 ./objects/main.o: ./src/main.c $(H_SRC)
 	@echo 'Building target using GCC compiler: $<'
-	$(CC) $< $(CC_FLAGS) -o $@
+	$(CC) $< $(CC_FLAGS) -I. -I./includes -o $@
 	@echo ' '
 
-./objects/socket_raw.o: ./libs/socket_raw.c
+./objects/socket_raw.o: ./libs/socket_raw.c $(H_SRC)
 	@echo 'Building target using GCC compiler: $<'
-	$(CC) $< $(CC_FLAGS) -o $@
+	$(CC) $< $(CC_FLAGS) -I. -I./includes -o $@
 	@echo ' '
 
 objFolder:
@@ -55,5 +55,6 @@ clean:
 	@find . -name "*.o" -exec $(RM) {} \;
 	@rmdir objects
 	@rm -f *~
+	@rm -f socket_raw
 
 .PHONY: all clean
