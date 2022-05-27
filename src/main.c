@@ -49,7 +49,7 @@ int main() {
         ip = (struct iphdr *) packet;
         icmp = (struct icmphdr *) (packet + sizeof(*ip));
 
-        build_ip(ip, ip_addr);
+        build_ip(ip, domain_ip);
         build_icmp(icmp);
 
         if ((sd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0) {
