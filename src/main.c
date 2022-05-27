@@ -10,6 +10,7 @@
 #include <linux/ip.h>
 #include <linux/icmp.h>
 #include <sys/wait.h>
+#include <netdb.h>
 
 #include "../includes/socket_raw.h"
 
@@ -24,30 +25,31 @@ struct packet {
 #define IP_MAXPACKET 65535
 
 int main() {
+        char *ip_addr;
         struct sockaddr_in serv;
         struct iphdr       *ip;
         struct icmphdr     *icmp;
+        char domain[255] = {""};
         unsigned int dst[4] = {0};
+        char* domain_ip;
         size_t len;
         int sd = -1, optval = 1;
         const char *addr, *packet;
 
         addr = (char *) calloc(1, 16 * sizeof(*addr));
         printf("\nSending an ICMP echo request packet ...\nEnter the address to ping: ");
-        scanf("%16s", (char *) addr);
 
-        if (sscanf(addr, "%u.%u.%u.%u", &dst[0], &dst[1], &dst[2], &dst[3]) != 4) {
-            perror("Invalid ip address");
-            return(0);
-        }
+        printf("Enter domain\n");
+        scanf("%s", domain);
 
-        printf("Target address: %u.%u.%u.%u ... ", dst[0], dst[1], dst[2], dst[3]);
+        domain_ip = getIp(domain, ip_addr);
+
         packet = (char *) calloc(1, sizeof(*ip) + sizeof(*icmp));
 
         ip = (struct iphdr *) packet;
         icmp = (struct icmphdr *) (packet + sizeof(*ip));
 
-        build_ip(ip, addr);
+        build_ip(ip, ip_addr);
         build_icmp(icmp);
 
         if ((sd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0) {

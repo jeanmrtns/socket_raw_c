@@ -53,7 +53,6 @@ objFolder:
 
 clean:
 	@find . -name "*.o" -exec $(RM) {} \;
-	@rmdir objects
-	@rm -f *~
+	@rm -rf objects *~
 
 .PHONY: all clean

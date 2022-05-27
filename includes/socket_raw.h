@@ -7,3 +7,4 @@ void print_icmphdr(unsigned char *);
  */
 unsigned short in_cksum(unsigned short *, int);
 int receive(void);
+char* getIp(char domain[], char *);
