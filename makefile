@@ -54,5 +54,6 @@ objFolder:
 clean:
 	@find . -name "*.o" -exec $(RM) {} \;
 	@rm -rf objects *~
+	@rm $(prj)
 
 .PHONY: all clean
