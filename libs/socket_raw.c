@@ -196,8 +196,6 @@ char* getIp(char domain[], char *xip_addr)
         hints.ai_socktype = SOCK_DGRAM;
         hints.ai_protocol = IPPROTO_TCP;
 
-        /*xip_addr = malloc(INET6_ADDRSTRLEN);
-        memset(ip_addr, 0, INET6_ADDRSTRLEN);*/
         memset(&hints, 0, sizeof hints);
         
         if ((status = getaddrinfo(domain, port, &hints, &res)) != 0)
